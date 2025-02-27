@@ -12,13 +12,14 @@
 <constant value="3" name="TAPE_LEFT"/>
 <constant value="4" name="TAPE_RIGHT"/>
 <constant value="5" name="STRAIGHT"/>
-<constant value="205" name="TARGET"/>
-<constant value="1000" name="THRESHOLD"/>
-<constant value="850" name="TIMER"/>
-<constant value="420" name="TURN_TARGET"/>
-<constant value="220" name="EDGE"/>
+<constant value="300" name="TARGET"/>
+<constant value="900" name="THRESHOLD"/>
+<constant value="800" name="TIMER"/>
+<constant value="350" name="TURN_TARGET"/>
+<constant value="200" name="EDGE"/>
 <constant value="400" name="TAPE_TARGET"/>
-<constant value="700" name="LOST_TIMER"/>
+<constant value="870" name="LOST_TIMER"/>
+<constant value="-270" name="TURN_TARGET_BACK"/>
 
 
 <!--show keywords state-->
@@ -72,22 +73,25 @@ onevent prox                        # check proximity sensors
       motor.right.target = TAPE_TARGET
        call leds.circle(32,32,0,0,0,0,0,0)
        timer.period[0] = 0
+       timer.period[1] = 0
     end
     if (state == LEFT or state == RIGHT or state == STRAIGHT) and prox.ground.delta[0] &lt; EDGE then
       state = TAPE_LEFT                           #  transition to LEFT state
-      motor.left.target = -TURN_TARGET                  #  move left
+      motor.left.target = TURN_TARGET_BACK                #  move left
       motor.right.target = TURN_TARGET
        call leds.circle(32,32,0,0,0,0,0,0)
        timer.period[0] = 0
+       timer.period[1] = 0
     end
 
     # if we are in state other than LEFT and sense a blockage    
     if (state == RIGHT or state == TAPE_RIGHT or state == TAPE_LEFT) and max > THRESHOLD then     
       state = LEFT               # transition to LEFT state
-      motor.left.target = -TURN_TARGET         # stop motors
+      motor.left.target = TURN_TARGET_BACK       # stop motors
       motor.right.target = TURN_TARGET
       call leds.circle(32,32,32,0,0,0,0,0)
       timer.period[0] = 0
+      timer.period[1] = 0
     end
 
     # if we are in state BLOCKED and blockage is removed    
@@ -109,7 +113,7 @@ onevent prox                        # check proximity sensors
   onevent timer1
   		state = RIGHT
   		motor.left.target = TURN_TARGET         # stop motors
-     motor.right.target = -TURN_TARGET
+     motor.right.target = TURN_TARGET_BACK
      timer.period[1] = 0
      call leds.circle(32,32,32,32,32,0,0,0)
   </node>
