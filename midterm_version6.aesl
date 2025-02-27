@@ -14,12 +14,12 @@
 <constant value="5" name="STRAIGHT"/>
 <constant value="300" name="TARGET"/>
 <constant value="900" name="THRESHOLD"/>
-<constant value="800" name="TIMER"/>
-<constant value="350" name="TURN_TARGET"/>
+<constant value="400" name="TIMER"/>
+<constant value="400" name="TURN_TARGET"/>
 <constant value="200" name="EDGE"/>
 <constant value="400" name="TAPE_TARGET"/>
 <constant value="870" name="LOST_TIMER"/>
-<constant value="-270" name="TURN_TARGET_BACK"/>
+<constant value="-370" name="TURN_TARGET_BACK"/>
 
 
 <!--show keywords state-->
@@ -97,8 +97,8 @@ onevent prox                        # check proximity sensors
     # if we are in state BLOCKED and blockage is removed    
     if (state == LEFT) and max &lt;= THRESHOLD then
       state = STRAIGHT                # transition to STRAIGHT state
-      motor.left.target = TARGET     # start moving forward
-      motor.right.target = TARGET
+      motor.left.target = TURN_TARGET     # start moving forward
+      motor.right.target = TURN_TARGET
       timer.period[1] = TIMER
       call leds.circle(32,32,32,32,0,0,0,0)
       timer.period[0] = 0
