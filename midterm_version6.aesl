@@ -15,10 +15,10 @@
 <constant value="300" name="TARGET"/>
 <constant value="700" name="THRESHOLD"/>
 <constant value="400" name="TIMER"/>
-<constant value="400" name="TURN_TARGET"/>
+<constant value="450" name="TURN_TARGET"/>
 <constant value="200" name="EDGE"/>
 <constant value="400" name="TAPE_TARGET"/>
-<constant value="870" name="LOST_TIMER"/>
+<constant value="1000" name="LOST_TIMER"/>
 <constant value="-370" name="TURN_TARGET_BACK"/>
 
 
@@ -31,6 +31,7 @@
 var max                             # max over all sensor readings
 var mean                            # average over all sensor readings
 var state = STOPPED                 # state of the robot
+var count = 0
 
 motor.left.target = 0               # reset motors
 motor.right.target = 0
@@ -56,23 +57,21 @@ onevent prox                        # check proximity sensors
       motor.left.target = TAPE_TARGET          #  move right
       motor.right.target = 0
       call leds.circle(32,0,0,0,0,0,0,0)
-      timer.period[0] = 0
+      timer.period[0] = LOST_TIMER
     end
     
-    if state == TAPE_RIGHT and prox.ground.delta[0] >= EDGE then
-    		timer.period[0] = LOST_TIMER
-    		 motor.left.target = TAPE_TARGET - 100
-    	 motor.right.target = TAPE_TARGET - 100
-    end
+#    if state == TAPE_RIGHT and prox.ground.delta[0] >= EDGE then
+#    	
+#    end
 
     
     # if moving right and sensing black line
-    if (state == TAPE_RIGHT) and prox.ground.delta01] &lt; EDGE then
+    if (state == TAPE_RIGHT) and prox.ground.delta[0] &lt; EDGE then
       state = TAPE_LEFT                           #  transition to LEFT state
       motor.left.target = 0                  #  move left
       motor.right.target = TAPE_TARGET
        call leds.circle(32,32,0,0,0,0,0,0)
-       timer.period[0] = 0
+       timer.period[0] = LOST_TIMER
        timer.period[1] = 0
     end
     if (state == LEFT or state == RIGHT or state == STRAIGHT) and prox.ground.delta[0] &lt; EDGE then
@@ -106,14 +105,27 @@ onevent prox                        # check proximity sensors
   end
   
   onevent timer0
-  		motor.left.target = -TARGET     # start moving forward
-      motor.right.target = TARGET
+#  if count == 0 then
+  		
+  		motor.left.target = -TARGET     
+      motor.right.target = TURN_TARGET
+#      timer.period[0] = 470
+#  		count = count + 1
+#  elseif count == 1 then
+#  		motor.left.target = 100     # start moving forward
+#      motor.right.target = 100
+#  		
+#  		count = count + 1
+#  	else
   		timer.period[0] = 0
+#  		count = 0
+#  		end
+  		call leds.circle(32,32,32,32,32,32,32,32)
   
   onevent timer1
   		state = RIGHT
-  		motor.left.target = TURN_TARGET         # stop motors
-     motor.right.target = TURN_TARGET_BACK
+  		motor.left.target = TURN_TARGET         
+     motor.right.target = -TURN_TARGET 
      timer.period[1] = 0
      call leds.circle(32,32,32,32,32,0,0,0)
   </node>
