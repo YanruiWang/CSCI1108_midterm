@@ -13,12 +13,12 @@
 <constant value="4" name="TAPE_RIGHT"/>
 <constant value="5" name="STRAIGHT"/>
 <constant value="300" name="TARGET"/>
-<constant value="832" name="THRESHOLD"/>
+<constant value="700" name="THRESHOLD"/>
 <constant value="550" name="TIMER"/>
-<constant value="450" name="TURN_TARGET"/>
-<constant value="200" name="EDGE"/>
+<constant value="400" name="TURN_TARGET"/>
+<constant value="250" name="EDGE"/>
 <constant value="400" name="TAPE_TARGET"/>
-<constant value="1000" name="LOST_TIMER"/>
+<constant value="1300" name="LOST_TIMER"/>
 <constant value="-370" name="TURN_TARGET_BACK"/>
 
 
@@ -71,7 +71,7 @@ onevent prox                        # check proximity sensors
       motor.left.target = 0                  #  move left
       motor.right.target = TAPE_TARGET
        call leds.circle(32,32,0,0,0,0,0,0)
-       timer.period[0] = LOST_TIMER
+       timer.period[0] = 0
        timer.period[1] = 0
     end
     if (state == LEFT or state == RIGHT or state == STRAIGHT) and prox.ground.delta[0] &lt; EDGE then
