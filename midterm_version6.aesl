@@ -15,7 +15,7 @@
 <constant value="300" name="TARGET"/>
 <constant value="900" name="THRESHOLD"/>
 <constant value="400" name="TIMER"/>
-<constant value="450" name="TURN_TARGET"/>
+<constant value="420" name="TURN_TARGET"/>
 <constant value="300" name="EDGE"/>
 <constant value="400" name="TAPE_TARGET"/>
 <constant value="1000" name="LOST_TIMER"/>
