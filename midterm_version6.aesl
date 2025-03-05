@@ -55,7 +55,7 @@ onevent prox                        # check proximity sensors
     if state == TAPE_LEFT and  prox.ground.delta[0] >= EDGE then
       state = TAPE_RIGHT                          #  transition to RIGHT state
       motor.left.target = TAPE_TARGET          #  move right
-      motor.right.target = 50
+      motor.right.target = 80
       call leds.circle(32,0,0,0,0,0,0,0)
       timer.period[0] = LOST_TIMER
     end
@@ -68,7 +68,7 @@ onevent prox                        # check proximity sensors
     # if moving right and sensing black line
     if (state == TAPE_RIGHT) and prox.ground.delta[0] &lt; EDGE then
       state = TAPE_LEFT                           #  transition to LEFT state
-      motor.left.target = 50                  #  move left
+      motor.left.target = 80                  #  move left
       motor.right.target = TAPE_TARGET
        call leds.circle(32,32,0,0,0,0,0,0)
        timer.period[0] = 0
